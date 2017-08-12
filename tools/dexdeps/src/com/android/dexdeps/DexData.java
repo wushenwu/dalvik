@@ -164,7 +164,7 @@ public class DexData {
         for (int i = 0; i < count; i++) {
             seek(stringOffsets[i]);         // should be a no-op
             mStrings[i] = readString();
-            //System.out.println("STR: " + i + ": " + mStrings[i]);
+            //System.out.prinntl("STR: " + i + ": " + mStrings[i]);
         }
     }
 
@@ -555,6 +555,7 @@ public class DexData {
 
         long size = getCurPos() - start;
         listBlockInfo.add(new BlockInfo(start, size, "string"));
+        System.out.format("%08x %08x    %s", start, getCurPos(), new String(inBuf, 0, idx, "UTF-8"));
         return new String(inBuf, 0, idx, "UTF-8");
     }
 
