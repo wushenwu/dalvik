@@ -19,6 +19,8 @@ package com.android.dexdeps;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Data extracted from a DEX file.
@@ -35,6 +37,8 @@ public class DexData {
 
     private byte tmpBuf[] = new byte[4];
     private boolean isBigEndian = false;
+
+    private List<BlockInfo> listBlockInfo = new LinkedList<BlockInfo>();
 
     /**
      * Constructs a new DexData for this file.
@@ -60,6 +64,7 @@ public class DexData {
         loadClassDefs();
 
         markInternalClasses();
+
     }
 
     /**
@@ -107,9 +112,9 @@ public class DexData {
         mHeaderItem.fileSize = readInt();
         mHeaderItem.headerSize = readInt();
         /*mHeaderItem.endianTag =*/ readInt();
-        /*mHeaderItem.linkSize =*/ readInt();
-        /*mHeaderItem.linkOff =*/ readInt();
-        /*mHeaderItem.mapOff =*/ readInt();
+        mHeaderItem.linkSize = readInt();
+        mHeaderItem.linkOff = readInt();
+        mHeaderItem.mapOff = readInt();
         mHeaderItem.stringIdsSize = readInt();
         mHeaderItem.stringIdsOff = readInt();
         mHeaderItem.typeIdsSize = readInt();
@@ -122,8 +127,17 @@ public class DexData {
         mHeaderItem.methodIdsOff = readInt();
         mHeaderItem.classDefsSize = readInt();
         mHeaderItem.classDefsOff = readInt();
-        /*mHeaderItem.dataSize =*/ readInt();
-        /*mHeaderItem.dataOff =*/ readInt();
+        mHeaderItem.dataSize = readInt();
+        mHeaderItem.dataOff = readInt();
+
+        listBlockInfo.add(new BlockInfo(mHeaderItem.linkOff, mHeaderItem.linkSize, "link"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.stringIdsOff, mHeaderItem.stringIdsSize, "stringIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.typeIdsOff, mHeaderItem.typeIdsSize, "typeIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.protoIdsOff, mHeaderItem.protoIdsSize, "protoIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.fieldIdsOff, mHeaderItem.fieldIdsSize, "fieldIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.methodIdsOff, mHeaderItem.methodIdsSize, "methodIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.classDefsOff, mHeaderItem.classDefsSize, "classDefs"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.dataOff, mHeaderItem.dataSize, "data"));
     }
 
     /**
@@ -134,7 +148,7 @@ public class DexData {
      * seeking around in the file.
      */
     void loadStrings() throws IOException {
-        int count = mHeaderItem.stringIdsSize;
+        int count = mStrings.length;
         int stringOffsets[] = new int[count];
 
         //System.out.println("reading " + count + " strings");
@@ -347,6 +361,10 @@ public class DexData {
         return mStrings[mTypeIds[protoId.returnTypeIdx].descriptorIdx];
     }
 
+    public String[] getAllStrings() {
+        return mStrings;
+    }
+
     /**
      * Returns an array with all of the class references that don't
      * correspond to classes in the DEX file.  Each class reference has
@@ -433,6 +451,10 @@ public class DexData {
         mDexFile.seek(position);
     }
 
+    long getCurPos() throws IOException {
+        return mDexFile.getFilePointer();
+    }
+
     /**
      * Fills the buffer by reading bytes from the DEX file.
      */
@@ -502,6 +524,8 @@ public class DexData {
      * may cause the underlying implementation to reload I/O buffers.
      */
     String readString() throws IOException {
+        long start = getCurPos();
+
         int utf16len = readUnsignedLeb128();
         byte inBuf[] = new byte[utf16len * 3];      // worst case
         int idx;
@@ -513,6 +537,7 @@ public class DexData {
             inBuf[idx] = val;
         }
 
+        listBlockInfo.add(new BlockInfo(start, idx + 4, "string"));
         return new String(inBuf, 0, idx, "UTF-8");
     }
 
@@ -530,12 +555,15 @@ public class DexData {
         public int fileSize;
         public int headerSize;
         public int endianTag;
+        public int linkSize, linkOff;
+        public int mapOff;
         public int stringIdsSize, stringIdsOff;
         public int typeIdsSize, typeIdsOff;
         public int protoIdsSize, protoIdsOff;
         public int fieldIdsSize, fieldIdsOff;
         public int methodIdsSize, methodIdsOff;
         public int classDefsSize, classDefsOff;
+        public int dataSize, dataOff;
 
         /* expected magic values */
         public static final byte[] DEX_FILE_MAGIC = {
@@ -598,5 +626,17 @@ public class DexData {
      */
     static class ClassDefItem {
         public int classIdx;            // index into type_ids
+    }
+
+    static class BlockInfo {
+        public long start;
+        public int size;
+        public String name;
+
+        BlockInfo(long start, int size, String name) {
+            this.start = start;
+            this.size = size;
+            this.name = name;
+        }
     }
 }

@@ -94,6 +94,16 @@ public class Output {
     }
 
     /**
+     * Print the list of strings
+     */
+    static void printStrings(DexData dexData) {
+        String allStrings[] = dexData.getAllStrings();
+        for (int i = 0; i < allStrings.length; i++) {
+            out.println(allStrings[i]);
+        }
+    }
+
+    /**
      * Prints the list of classes in a simple human-readable format.
      */
     static void printClassRefs(ClassRef[] classes, boolean justClasses) {

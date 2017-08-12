@@ -307,7 +307,16 @@ void dexFileSetupBasicPointers(DexFile* pDexFile, const u1* data) {
     pDexFile->pProtoIds = (const DexProtoId*) (data + pHeader->protoIdsOff);
     pDexFile->pClassDefs = (const DexClassDef*) (data + pHeader->classDefsOff);
     pDexFile->pLinkData = (const DexLink*) (data + pHeader->linkOff);
+}
 
+/*
+dump the space layout
+*/
+void dumpSpaceLayout(const u1* data)
+{
+    DexHeader *pHeader = (DexHeader *)data;
+
+    //summary info
     addBlockInfo(0, sizeof(DexHeader), "hdr", &g_block_list);
     addBlockInfo(pHeader->stringIdsOff, pHeader->stringIdsSize, "string", &g_block_list); 
     addBlockInfo(pHeader->typeIdsOff, pHeader->typeIdsSize, "type", &g_block_list);
@@ -317,7 +326,28 @@ void dexFileSetupBasicPointers(DexFile* pDexFile, const u1* data) {
     addBlockInfo(pHeader->classDefsOff, pHeader->classDefsSize, "classDef", &g_block_list);
     addBlockInfo(pHeader->linkOff, pHeader->linkSize, "link", &g_block_list);
     addBlockInfo(pHeader->mapOff, 0, "map", &g_block_list);
+
+    //strings 
+    
 }
+
+/*
+string_ids  string_id_item[]
+
+string_id_item TYPE_STRING_ID_ITEM  0x0001  0x04
+
+string_data_off uint  string_data_item
+
+
+    
+
+
+
+*/
+void dumpStrings()
+{
+}
+
 
 /*
  * Parse an optimized or unoptimized .dex file sitting in memory.  This is
