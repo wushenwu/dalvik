@@ -519,14 +519,46 @@ public class DexData {
      *
      * @throws EOFException if we run off the end of the file
      */
-    int readUnsignedLeb128() throws IOException {
+    int readUnsignedLeb128_Bug() throws IOException {
         int result = 0;
         byte val;
+
+        //bug exists here
+        //check 0x0180 as a case, it will only get 1, which should have been 0x80
 
         do {
             val = readByte();
             result = (result << 7) | (val & 0x7f);
         } while (val < 0);
+
+        return result;
+    }
+
+    /**
+     * This is from DexGen / DebugInfoDecoder
+     *
+     * Reads a DWARFv3-style unsigned LEB128 integer to the specified stream.
+     * See DWARF v3 section 7.6. An invalid sequence produces an IOException.
+     *
+     * @param bs stream to input from       //removed
+     * @return read value, which should be treated as an unsigned value.
+     * @throws IOException on invalid sequence in addition to
+     * those caused by the InputStream
+     */
+    int readUnsignedLeb128() throws IOException {
+        int result = 0;
+        int cur;
+        int count = 0;
+
+        do {
+            cur = readByte();
+            result |= (cur & 0x7f) << (count * 7);
+            count++;
+        } while (((cur & 0x80) == 0x80) && count < 5);
+
+        if ((cur & 0x80) == 0x80) {
+            throw new IOException ("invalid LEB128 sequence");
+        }
 
         return result;
     }
@@ -555,7 +587,7 @@ public class DexData {
 
         long size = getCurPos() - start;
         listBlockInfo.add(new BlockInfo(start, size, "string"));
-        System.out.format("%08x %08x    %s", start, getCurPos(), new String(inBuf, 0, idx, "UTF-8"));
+        System.out.format("%08x %08x    %s\n", start, getCurPos(), new String(inBuf, 0, idx, "UTF-8"));
         return new String(inBuf, 0, idx, "UTF-8");
     }
 
