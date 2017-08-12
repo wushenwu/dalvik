@@ -131,12 +131,12 @@ public class DexData {
         mHeaderItem.dataOff = readInt();
 
         listBlockInfo.add(new BlockInfo(mHeaderItem.linkOff, mHeaderItem.linkSize, "link"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.stringIdsOff, mHeaderItem.stringIdsSize, "stringIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.typeIdsOff, mHeaderItem.typeIdsSize, "typeIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.protoIdsOff, mHeaderItem.protoIdsSize, "protoIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.fieldIdsOff, mHeaderItem.fieldIdsSize, "fieldIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.methodIdsOff, mHeaderItem.methodIdsSize, "methodIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.classDefsOff, mHeaderItem.classDefsSize, "classDefs"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.stringIdsOff, mHeaderItem.stringIdsSize * 4, "stringIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.typeIdsOff, mHeaderItem.typeIdsSize * 4, "typeIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.protoIdsOff, mHeaderItem.protoIdsSize * 12, "protoIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.fieldIdsOff, mHeaderItem.fieldIdsSize * 8, "fieldIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.methodIdsOff, mHeaderItem.methodIdsSize * 8, "methodIds"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.classDefsOff, mHeaderItem.classDefsSize * 32, "classDefs"));
         listBlockInfo.add(new BlockInfo(mHeaderItem.dataOff, mHeaderItem.dataSize, "data"));
     }
 

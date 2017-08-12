@@ -109,15 +109,17 @@ public class Output {
         List<DexData.BlockInfo> blockInfoList = dexData.getListBlockInfo();
 
         long prev_end = -1;
+        String prev_name = "";
         Iterator<DexData.BlockInfo> iterator = blockInfoList.iterator();
         while (iterator.hasNext()) {
             DexData.BlockInfo block = iterator.next();
 
             //prune those continued blocks
-            if (block.start != prev_end) {
+            if (block.start != prev_end || block.name != prev_name) {
                 out.format("%08x    %08x    %s\n", block.start, block.start + block.size, block.name);
             }
             prev_end = block.start + block.size;
+            prev_name = block.name;
         }
     }
 
