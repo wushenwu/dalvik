@@ -365,6 +365,10 @@ public class DexData {
         return mStrings;
     }
 
+    public List<BlockInfo> getListBlockInfo() {
+        return listBlockInfo;
+    }
+
     /**
      * Returns an array with all of the class references that don't
      * correspond to classes in the DEX file.  Each class reference has

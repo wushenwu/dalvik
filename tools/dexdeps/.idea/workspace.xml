@@ -12,11 +12,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="399">
-              <caret line="58" column="49" lean-forward="false" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="49" />
+            <state relative-caret-position="475">
+              <caret line="71" column="49" lean-forward="true" selection-start-line="71" selection-start-column="49" selection-end-line="71" selection-end-column="49" />
               <folding />
             </state>
           </provider>
@@ -25,28 +25,31 @@
       <file leaf-file-name="Output.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/Output.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
+            <state relative-caret-position="242">
+              <caret line="106" column="0" lean-forward="true" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
               <folding>
-                <element signature="e#1703#1704#0" expanded="true" />
-                <element signature="e#1752#1753#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#1753#1754#0" expanded="true" />
+                <element signature="e#1802#1803#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="DexData.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="DexData.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/DexData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
+            <state relative-caret-position="281">
+              <caret line="368" column="29" lean-forward="false" selection-start-line="368" selection-start-column="29" selection-end-line="368" selection-end-column="29" />
               <folding>
-                <element signature="e#0#21395#0" expanded="true" />
+                <element signature="e#0#21480#0" expanded="true" />
                 <element signature="imports" expanded="true" />
                 <element signature="docComment;class#DexData#0" expanded="false" />
                 <element signature="e#1334#1345#0" expanded="true" />
                 <element signature="e#12273#12274#0" expanded="true" />
                 <element signature="e#12304#12305#0" expanded="true" />
+                <element signature="e#12353#12354#0" expanded="true" />
+                <element signature="e#12389#12390#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -88,8 +91,9 @@
       <find>loadStrings</find>
       <find>seek(</find>
       <find>loadSTRING</find>
-      <find>BlockInfo</find>
       <find>loadString</find>
+      <find>BlockInfo</find>
+      <find>getA</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -104,9 +108,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/src/com/android/dexdeps/BlockInfo.java" />
-        <option value="$PROJECT_DIR$/src/com/android/dexdeps/Main.java" />
-        <option value="$PROJECT_DIR$/src/com/android/dexdeps/Output.java" />
         <option value="$PROJECT_DIR$/src/com/android/dexdeps/DexData.java" />
+        <option value="$PROJECT_DIR$/src/com/android/dexdeps/Output.java" />
+        <option value="$PROJECT_DIR$/src/com/android/dexdeps/Main.java" />
       </list>
     </option>
   </component>
@@ -116,7 +120,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="621" />
     <option name="y" value="131" />
     <option name="width" value="1080" />
@@ -278,15 +282,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1502512931489</updated>
-      <workItem from="1502512933179" duration="4947000" />
+      <workItem from="1502512933179" duration="5694000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4947000" />
+    <option name="totallyTimeSpent" value="5694000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1928" height="1044" extended-state="7" />
+    <frame x="-4" y="-4" width="1928" height="1044" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -364,25 +368,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/Output.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="112" column="0" lean-forward="true" selection-start-line="112" selection-start-column="0" selection-end-line="112" selection-end-column="0" />
-          <folding>
-            <element signature="e#1703#1704#0" expanded="true" />
-            <element signature="e#1752#1753#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="399">
-          <caret line="58" column="49" lean-forward="false" selection-start-line="58" selection-start-column="46" selection-end-line="58" selection-end-column="49" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://D:/Program/JDK/src.zip!/java/io/RandomAccessFile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
@@ -401,16 +386,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/DexData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="62" column="24" lean-forward="true" selection-start-line="62" selection-start-column="24" selection-end-line="62" selection-end-column="24" />
+        <state relative-caret-position="281">
+          <caret line="368" column="29" lean-forward="false" selection-start-line="368" selection-start-column="29" selection-end-line="368" selection-end-column="29" />
           <folding>
-            <element signature="e#0#21395#0" expanded="true" />
+            <element signature="e#0#21480#0" expanded="true" />
             <element signature="imports" expanded="true" />
             <element signature="docComment;class#DexData#0" expanded="false" />
             <element signature="e#1334#1345#0" expanded="true" />
             <element signature="e#12273#12274#0" expanded="true" />
             <element signature="e#12304#12305#0" expanded="true" />
+            <element signature="e#12353#12354#0" expanded="true" />
+            <element signature="e#12389#12390#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/Output.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="106" column="0" lean-forward="true" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1753#1754#0" expanded="true" />
+            <element signature="e#1802#1803#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="71" column="49" lean-forward="true" selection-start-line="71" selection-start-column="49" selection-end-line="71" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>

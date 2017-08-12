@@ -69,7 +69,6 @@ struct Options {
     const char* tempFileName;
     bool exportsOnly;
     bool verbose;
-    bool spaceLayout;
 };
 
 struct Options gOptions;
@@ -1643,15 +1642,6 @@ bail:
 }
 
 /*
- * dump the space layout
- *
- */
-void dumpSpaceLayout(DexFile *pDexFile)
-{
-
-}
-
-/*
  * Dump the contents of the register map area.
  *
  * These are only present in optimized DEX files, and the structure is
@@ -1753,11 +1743,6 @@ void processDexFile(const char* fileName, DexFile* pDexFile)
 
     if (gOptions.dumpRegisterMaps) {
         dumpRegisterMaps(pDexFile);
-        return;
-    }
-
-    if (gOptions.spaceLayout) {
-        dumpSpaceLayout(pDexFile);
         return;
     }
 
@@ -1900,11 +1885,6 @@ int main(int argc, char* const argv[])
         case 'm':       // dump register maps only
             gOptions.dumpRegisterMaps = true;
             break;
-            
-        case 's':       // dump space layout
-            gOptions.spaceLayout = true;
-            break;
-
         case 't':       // temp file, used when opening compressed Jar
             gOptions.tempFileName = optarg;
             break;

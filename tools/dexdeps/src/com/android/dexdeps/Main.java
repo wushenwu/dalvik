@@ -68,6 +68,9 @@ public class Main {
 
                 Output.generate(dexData, mOutputFormat, mJustClasses);
                 Output.generateFooter(mOutputFormat);
+
+                Output.printSpaceLayOut(dexData);
+
                 raf.close();
             }
         } catch (UsageException ue) {
