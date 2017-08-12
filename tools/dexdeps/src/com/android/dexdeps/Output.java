@@ -116,7 +116,7 @@ public class Output {
 
             //prune those continued blocks
             if (block.start != prev_end || block.name != prev_name) {
-                out.format("%08x    %08x    %s\n", block.start, block.start + block.size, block.name);
+                out.format("%08x    %08x    %08x    %s\n", prev_end, block.start, block.start + block.size, block.name);
             }
             prev_end = block.start + block.size;
             prev_name = block.name;
