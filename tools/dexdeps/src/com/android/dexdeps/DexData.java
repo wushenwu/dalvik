@@ -148,7 +148,7 @@ public class DexData {
      * seeking around in the file.
      */
     void loadStrings() throws IOException {
-        int count = mStrings.length;
+        int count = mHeaderItem.stringIdsSize;
         int stringOffsets[] = new int[count];
 
         //System.out.println("reading " + count + " strings");
@@ -541,7 +541,8 @@ public class DexData {
             inBuf[idx] = val;
         }
 
-        listBlockInfo.add(new BlockInfo(start, idx + 4, "string"));
+        long size = getCurPos() - start;
+        listBlockInfo.add(new BlockInfo(start, size, "string"));
         return new String(inBuf, 0, idx, "UTF-8");
     }
 
@@ -634,10 +635,10 @@ public class DexData {
 
     static class BlockInfo {
         public long start;
-        public int size;
+        public long size;
         public String name;
 
-        BlockInfo(long start, int size, String name) {
+        BlockInfo(long start, long size, String name) {
             this.start = start;
             this.size = size;
             this.name = name;

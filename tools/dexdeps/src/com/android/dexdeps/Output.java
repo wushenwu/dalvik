@@ -111,7 +111,7 @@ public class Output {
         Iterator<DexData.BlockInfo> iterator = blockInfoList.iterator();
         while (iterator.hasNext()) {
             DexData.BlockInfo block = iterator.next();
-            out.format("%08x    %08x    %s", block.start, block.start + block.size, block.name);
+            out.format("%08x    %08x    %s\n", block.start, block.start + block.size, block.name);
         }
     }
 
