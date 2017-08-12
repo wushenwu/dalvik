@@ -39,17 +39,16 @@
       <file leaf-file-name="DexData.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/DexData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="369">
-              <caret line="564" column="0" lean-forward="true" selection-start-line="564" selection-start-column="0" selection-end-line="564" selection-end-column="0" />
+            <state relative-caret-position="-380">
+              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
               <folding>
-                <element signature="e#0#23148#0" expanded="true" />
-                <element signature="imports" expanded="true" />
+                <element signature="e#0#23409#0" expanded="true" />
                 <element signature="docComment;class#DexData#0" expanded="false" />
-                <element signature="e#1334#1345#0" expanded="true" />
-                <element signature="e#12798#12799#0" expanded="true" />
-                <element signature="e#12829#12830#0" expanded="true" />
-                <element signature="e#12878#12879#0" expanded="true" />
-                <element signature="e#12914#12915#0" expanded="true" />
+                <element signature="e#1391#1402#0" expanded="true" />
+                <element signature="e#13053#13054#0" expanded="true" />
+                <element signature="e#13084#13085#0" expanded="true" />
+                <element signature="e#13139#13140#0" expanded="true" />
+                <element signature="e#13175#13176#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -94,8 +93,9 @@
       <find>getA</find>
       <find>loadTypeIds</find>
       <find>loadProto</find>
-      <find>loadString</find>
       <find>loadStrings</find>
+      <find>loadString</find>
+      <find>type_list</find>
     </findStrings>
   </component>
   <component name="GradleLocalSettings">
@@ -174,7 +174,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="SearchEverywhereHistoryKey" value="main&#9;FILE&#9;file://D:/DEV/dalvik/tools/dexdeps/src/com/android/dexdeps/Main.java&#10;key map&#9;ACTION&#9;ChangeKeymap&#10;DexD&#9;PSI&#9;JAVA://com.android.dexdeps.DexData" />
+    <property name="SearchEverywhereHistoryKey" value="search&#9;ACTION&#9;SearchEverywhere&#10;main&#9;FILE&#9;file://D:/DEV/dalvik/tools/dexdeps/src/com/android/dexdeps/Main.java&#10;key map&#9;ACTION&#9;ChangeKeymap&#10;DexD&#9;PSI&#9;JAVA://com.android.dexdeps.DexData" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -284,12 +284,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1502512931489</updated>
-      <workItem from="1502512933179" duration="16604000" />
+      <workItem from="1502512933179" duration="19545000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16604000" />
+    <option name="totallyTimeSpent" value="19545000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1928" height="1044" extended-state="6" />
@@ -408,17 +408,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/DexData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="369">
-          <caret line="564" column="0" lean-forward="true" selection-start-line="564" selection-start-column="0" selection-end-line="564" selection-end-column="0" />
+        <state relative-caret-position="-380">
+          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
           <folding>
-            <element signature="e#0#23148#0" expanded="true" />
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#23409#0" expanded="true" />
             <element signature="docComment;class#DexData#0" expanded="false" />
-            <element signature="e#1334#1345#0" expanded="true" />
-            <element signature="e#12798#12799#0" expanded="true" />
-            <element signature="e#12829#12830#0" expanded="true" />
-            <element signature="e#12878#12879#0" expanded="true" />
-            <element signature="e#12914#12915#0" expanded="true" />
+            <element signature="e#1391#1402#0" expanded="true" />
+            <element signature="e#13053#13054#0" expanded="true" />
+            <element signature="e#13084#13085#0" expanded="true" />
+            <element signature="e#13139#13140#0" expanded="true" />
+            <element signature="e#13175#13176#0" expanded="true" />
           </folding>
         </state>
       </provider>

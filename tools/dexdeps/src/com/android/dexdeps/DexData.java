@@ -16,11 +16,13 @@
 
 package com.android.dexdeps;
 
+import jdk.nashorn.internal.ir.Block;
+
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Collection;
+import java.util.LinkedHashSet;
 
 /**
  * Data extracted from a DEX file.
@@ -38,7 +40,7 @@ public class DexData {
     private byte tmpBuf[] = new byte[4];
     private boolean isBigEndian = false;
 
-    private List<BlockInfo> listBlockInfo = new LinkedList<BlockInfo>();
+    private Collection<BlockInfo> listBlockInfo = new LinkedHashSet<BlockInfo>();
 
     /**
      * Constructs a new DexData for this file.
@@ -234,7 +236,12 @@ public class DexData {
                 }
             }
 
-            listBlockInfo.add(new BlockInfo(offset, getCurPos() - offset, "type_list"));
+            //need to consider alignment, alignment: 4 bytes
+            long remain = getCurPos() & 0x03;
+            if (remain != 0) {
+                remain = 4 - remain;
+            }
+            listBlockInfo.add(new BlockInfo(offset, getCurPos() - offset + remain, "type_list"));
         }
     }
 
@@ -377,7 +384,7 @@ public class DexData {
         return mStrings;
     }
 
-    public List<BlockInfo> getListBlockInfo() {
+    public Collection<BlockInfo> getListBlockInfo() {
         return listBlockInfo;
     }
 
