@@ -39,16 +39,17 @@
       <file leaf-file-name="DexData.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/DexData.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-380">
-              <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+            <state relative-caret-position="342">
+              <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
               <folding>
-                <element signature="e#0#23409#0" expanded="true" />
+                <element signature="e#0#23370#0" expanded="true" />
+                <element signature="imports" expanded="true" />
                 <element signature="docComment;class#DexData#0" expanded="false" />
-                <element signature="e#1391#1402#0" expanded="true" />
-                <element signature="e#13053#13054#0" expanded="true" />
-                <element signature="e#13084#13085#0" expanded="true" />
-                <element signature="e#13139#13140#0" expanded="true" />
-                <element signature="e#13175#13176#0" expanded="true" />
+                <element signature="e#1352#1363#0" expanded="true" />
+                <element signature="e#13014#13015#0" expanded="true" />
+                <element signature="e#13045#13046#0" expanded="true" />
+                <element signature="e#13100#13101#0" expanded="true" />
+                <element signature="e#13136#13137#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -284,12 +285,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1502512931489</updated>
-      <workItem from="1502512933179" duration="19545000" />
+      <workItem from="1502512933179" duration="19649000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="19545000" />
+    <option name="totallyTimeSpent" value="19649000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1928" height="1044" extended-state="6" />
@@ -408,16 +409,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/android/dexdeps/DexData.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-380">
-          <caret line="19" column="0" lean-forward="true" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        <state relative-caret-position="342">
+          <caret line="18" column="0" lean-forward="false" selection-start-line="18" selection-start-column="0" selection-end-line="18" selection-end-column="0" />
           <folding>
-            <element signature="e#0#23409#0" expanded="true" />
+            <element signature="e#0#23370#0" expanded="true" />
+            <element signature="imports" expanded="true" />
             <element signature="docComment;class#DexData#0" expanded="false" />
-            <element signature="e#1391#1402#0" expanded="true" />
-            <element signature="e#13053#13054#0" expanded="true" />
-            <element signature="e#13084#13085#0" expanded="true" />
-            <element signature="e#13139#13140#0" expanded="true" />
-            <element signature="e#13175#13176#0" expanded="true" />
+            <element signature="e#1352#1363#0" expanded="true" />
+            <element signature="e#13014#13015#0" expanded="true" />
+            <element signature="e#13045#13046#0" expanded="true" />
+            <element signature="e#13100#13101#0" expanded="true" />
+            <element signature="e#13136#13137#0" expanded="true" />
           </folding>
         </state>
       </provider>

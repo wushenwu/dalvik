@@ -16,8 +16,6 @@
 
 package com.android.dexdeps;
 
-import jdk.nashorn.internal.ir.Block;
-
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Arrays;
