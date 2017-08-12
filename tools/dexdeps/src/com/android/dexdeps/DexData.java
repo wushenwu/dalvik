@@ -178,6 +178,8 @@ public class DexData {
         //System.out.println("reading " + count + " typeIds");
         seek(mHeaderItem.typeIdsOff);
         for (int i = 0; i < count; i++) {
+            listBlockInfo.add(new BlockInfo(getCurPos(), 4, "typeIds"));
+
             mTypeIds[i] = new TypeIdItem();
             mTypeIds[i].descriptorIdx = readInt();
 
@@ -200,6 +202,8 @@ public class DexData {
          * Read the proto ID items.
          */
         for (int i = 0; i < count; i++) {
+            listBlockInfo.add(new BlockInfo(getCurPos(), 12, "protoId"));
+
             mProtoIds[i] = new ProtoIdItem();
             mProtoIds[i].shortyIdx = readInt();
             mProtoIds[i].returnTypeIdx = readInt();
@@ -229,6 +233,8 @@ public class DexData {
                     protoId.types[j] = readShort() & 0xffff;
                 }
             }
+
+            listBlockInfo.add(new BlockInfo(offset, getCurPos() - offset, "type_list"));
         }
     }
 
@@ -242,6 +248,8 @@ public class DexData {
         //System.out.println("reading " + count + " fieldIds");
         seek(mHeaderItem.fieldIdsOff);
         for (int i = 0; i < count; i++) {
+            listBlockInfo.add(new BlockInfo(getCurPos(), 2 + 2 + 4, "field_ids"));
+
             mFieldIds[i] = new FieldIdItem();
             mFieldIds[i].classIdx = readShort() & 0xffff;
             mFieldIds[i].typeIdx = readShort() & 0xffff;
@@ -262,6 +270,8 @@ public class DexData {
         //System.out.println("reading " + count + " methodIds");
         seek(mHeaderItem.methodIdsOff);
         for (int i = 0; i < count; i++) {
+            listBlockInfo.add(new BlockInfo(getCurPos(), 2 + 2 + 4, "method_ids"));
+
             mMethodIds[i] = new MethodIdItem();
             mMethodIds[i].classIdx = readShort() & 0xffff;
             mMethodIds[i].protoIdx = readShort() & 0xffff;
@@ -282,6 +292,8 @@ public class DexData {
         //System.out.println("reading " + count + " classDefs");
         seek(mHeaderItem.classDefsOff);
         for (int i = 0; i < count; i++) {
+            listBlockInfo.add(new BlockInfo(getCurPos(), 4 * 8, "class_def" ));
+
             mClassDefs[i] = new ClassDefItem();
             mClassDefs[i].classIdx = readInt();
 
