@@ -108,10 +108,16 @@ public class Output {
     static void printSpaceLayOut(DexData dexData) {
         List<DexData.BlockInfo> blockInfoList = dexData.getListBlockInfo();
 
+        long prev_end = -1;
         Iterator<DexData.BlockInfo> iterator = blockInfoList.iterator();
         while (iterator.hasNext()) {
             DexData.BlockInfo block = iterator.next();
-            out.format("%08x    %08x    %s\n", block.start, block.start + block.size, block.name);
+
+            //prune those continued blocks
+            if (block.start != prev_end) {
+                out.format("%08x    %08x    %s\n", block.start, block.start + block.size, block.name);
+            }
+            prev_end = block.start + block.size;
         }
     }
 
