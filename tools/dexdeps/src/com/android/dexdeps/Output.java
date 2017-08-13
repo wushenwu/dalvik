@@ -19,6 +19,8 @@ package com.android.dexdeps;
 import java.io.PrintStream;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Generate fancy output.
@@ -110,7 +112,11 @@ public class Output {
 
         long prev_end = -1;
         String prev_name = "";
-        Iterator<DexData.BlockInfo> iterator = blockInfoList.iterator();
+
+        List<DexData.BlockInfo> sorted = new LinkedList<>(blockInfoList);
+        sorted.sort(DexData.BlockInfo::compareTo);
+
+        Iterator<DexData.BlockInfo> iterator = sorted.iterator();
         while (iterator.hasNext()) {
             DexData.BlockInfo block = iterator.next();
 

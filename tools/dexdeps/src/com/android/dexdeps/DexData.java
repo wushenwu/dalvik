@@ -21,7 +21,6 @@ import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
-import java.util.Objects;
 
 /**
  * Data extracted from a DEX file.
@@ -685,7 +684,7 @@ public class DexData {
         public int classIdx;            // index into type_ids
     }
 
-    static class BlockInfo {
+    static class BlockInfo implements Comparable<BlockInfo> {
         public long start;
         public long size;
         public String name;
@@ -698,7 +697,13 @@ public class DexData {
 
         @Override
         public int hashCode() {
-            return Objects.hash(start, size, name);
+            //not exists in JDK 1.6
+            //return Objects.hash(start, size, name);
+            int result = 17;
+            result = 31 * result + name.hashCode();
+            result = 31 * result + (int)start;
+            result = 31 * result + (int)size;
+            return result;
         }
 
         @Override
@@ -708,7 +713,23 @@ public class DexData {
 
             return (start == ((BlockInfo) obj).start
                     && size == ((BlockInfo) obj).size
-                    && Objects.equals(name, ((BlockInfo) obj).name));
+                    && name.equals(((BlockInfo) obj).name));
+        }
+
+        @Override
+        public int compareTo(BlockInfo o) {
+            //compare priority
+            long cmp = start - o.start;
+            if ( cmp != 0) {
+                return (int)cmp;
+            }
+
+            cmp = start + size - (o.start + o.size);
+            if (cmp != 0) {
+                return (int)cmp;
+            }
+
+            return  name.compareTo(o.name);
         }
     }
 }
