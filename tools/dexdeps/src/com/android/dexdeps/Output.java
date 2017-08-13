@@ -17,10 +17,7 @@
 package com.android.dexdeps;
 
 import java.io.PrintStream;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Generate fancy output.
@@ -107,22 +104,39 @@ public class Output {
         }
     }
 
+    static void printStringsLayout(DexData dexData) {
+        out.format("string_id_item[]\n" +
+                        "string_data_off\tuint\n" +
+                        "utf16_size\tuleb128\n" +
+                        "data\tubyte[]\n"
+        );
+        out.format("%-8s\t%-8s\t%-8s\t%s\n", "start", "size", "end", "string");
+        Collection<DexData.BlockInfo> blockInfoList = dexData.getListBlockInfo();
+        Iterator<DexData.BlockInfo> iterator = blockInfoList.iterator();
+        DexData.BlockInfo block = null;
+        while (iterator.hasNext()) {
+            block = iterator.next();
+
+            if (block.name.equals("string")) {
+                out.format("%08x\t%08x\t%08x\t%s\n", block.start, block.size, block.start + block.size, block.name);
+            }
+        }
+    }
+
     static void printSpaceLayOut(DexData dexData) {
         Collection<DexData.BlockInfo> blockInfoList = dexData.getListBlockInfo();
 
         long prev_end = -1;
         String prev_name = "";
 
-        List<DexData.BlockInfo> sorted = new LinkedList<>(blockInfoList);
-        sorted.sort(DexData.BlockInfo::compareTo);
-
-        Iterator<DexData.BlockInfo> iterator = sorted.iterator();
+        Iterator<DexData.BlockInfo> iterator = blockInfoList.iterator();
+        DexData.BlockInfo block = null;
         while (iterator.hasNext()) {
-            DexData.BlockInfo block = iterator.next();
+            block = iterator.next();
 
             //prune those continued blocks
             if (block.start != prev_end || block.name != prev_name) {
-                out.format("%08x    %08x    %08x    %s\n", prev_end, block.start, block.start + block.size, block.name);
+                out.format("%08x\t%08x\t%08x\t%s\n", block.start, block.start + block.size, block.name);
             }
             prev_end = block.start + block.size;
             prev_name = block.name;

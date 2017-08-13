@@ -21,6 +21,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipFile;
@@ -30,13 +34,20 @@ public class Main {
     private static final String CLASSES_DEX = "classes.dex";
 
     private String[] mInputFileNames;
-    private String mOutputFormat = "xml";
+    private String mOutputFormat = "brief";
 
     /**
      * whether to only emit info about classes used; when {@code false},
      * info about fields and methods is also emitted
      */
     private boolean mJustClasses = false;
+
+    private boolean mJustSpaceLayout = false;
+
+    private String mShowType = "";
+
+    //as the function ptr table to show info by args
+    private Map<String, Method> m_cmds_table = new HashMap<String, Method>();
 
     /**
      * Entry point.
@@ -50,6 +61,15 @@ public class Main {
      * Start things up.
      */
     void run(String[] args) {
+        //init table
+        try {
+            m_cmds_table.put("string", Output.class.getMethod("printStrings", DexData.class));
+            m_cmds_table.put("stringlayout", Output.class.getMethod("printStringsLayout", DexData.class));
+            m_cmds_table.put("spacelayout", Output.class.getMethod("printSpaceLayOut", DexData.class));
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
         try {
             parseArgs(args);
             boolean first = true;
@@ -59,17 +79,24 @@ public class Main {
                 DexData dexData = new DexData(raf);
                 dexData.load();
 
-                if (first) {
-                    first = false;
-                    Output.generateFirstHeader(fileName, mOutputFormat);
+                if (mShowType != "") {
+                    try {
+                        m_cmds_table.get(mShowType).invoke(dexData);
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
                 } else {
-                    Output.generateHeader(fileName, mOutputFormat);
+                    if (first) {
+                        first = false;
+                        Output.generateFirstHeader(fileName, mOutputFormat);
+                    } else {
+                        Output.generateHeader(fileName, mOutputFormat);
+                    }
+                    Output.generate(dexData, mOutputFormat, mJustClasses);
+                    Output.generateFooter(mOutputFormat);
                 }
-
-                Output.generate(dexData, mOutputFormat, mJustClasses);
-                Output.generateFooter(mOutputFormat);
-
-                Output.printSpaceLayOut(dexData);
 
                 raf.close();
             }
@@ -204,8 +231,11 @@ public class Main {
             } else if (arg.equals("--just-classes")) {
                 mJustClasses = true;
             } else {
-                System.err.println("Unknown option '" + arg + "'");
-                throw new UsageException();
+                //System.err.println("Unknown option '" + arg + "'");
+                //throw new UsageException();
+
+                //thz perhaps for show cases
+                mShowType = arg;
             }
         }
 
@@ -229,6 +259,10 @@ public class Main {
                 "Usage: dexdeps [options] <file.{dex,apk,jar}> ...\n" +
                 "Options:\n" +
                 "  --format={xml,brief}\n" +
-                "  --just-classes\n");
+                "  --just-classes\n" +
+                "  --spacelayout\n" +
+                "  --string\n" +
+                "  --stringlayout\n"
+        );
     }
 }

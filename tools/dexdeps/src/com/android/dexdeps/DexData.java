@@ -18,9 +18,7 @@ package com.android.dexdeps;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedHashSet;
+import java.util.*;
 
 /**
  * Data extracted from a DEX file.
@@ -131,12 +129,12 @@ public class DexData {
         mHeaderItem.dataOff = readInt();
 
         listBlockInfo.add(new BlockInfo(mHeaderItem.linkOff, mHeaderItem.linkSize, "link"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.stringIdsOff, mHeaderItem.stringIdsSize * 4, "stringIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.typeIdsOff, mHeaderItem.typeIdsSize * 4, "typeIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.protoIdsOff, mHeaderItem.protoIdsSize * 12, "protoIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.fieldIdsOff, mHeaderItem.fieldIdsSize * 8, "fieldIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.methodIdsOff, mHeaderItem.methodIdsSize * 8, "methodIds"));
-        listBlockInfo.add(new BlockInfo(mHeaderItem.classDefsOff, mHeaderItem.classDefsSize * 32, "classDefs"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.stringIdsOff, mHeaderItem.stringIdsSize * 4, "string_ids"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.typeIdsOff, mHeaderItem.typeIdsSize * 4, "typed_ids"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.protoIdsOff, mHeaderItem.protoIdsSize * 12, "proto_ids"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.fieldIdsOff, mHeaderItem.fieldIdsSize * 8, "field_ids"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.methodIdsOff, mHeaderItem.methodIdsSize * 8, "method_ids"));
+        listBlockInfo.add(new BlockInfo(mHeaderItem.classDefsOff, mHeaderItem.classDefsSize * 32, "class_defs"));
         listBlockInfo.add(new BlockInfo(mHeaderItem.dataOff, mHeaderItem.dataSize, "data"));
     }
 
@@ -178,7 +176,7 @@ public class DexData {
         //System.out.println("reading " + count + " typeIds");
         seek(mHeaderItem.typeIdsOff);
         for (int i = 0; i < count; i++) {
-            listBlockInfo.add(new BlockInfo(getCurPos(), 4, "typeIds"));
+            listBlockInfo.add(new BlockInfo(getCurPos(), 4, "typeId"));
 
             mTypeIds[i] = new TypeIdItem();
             mTypeIds[i].descriptorIdx = readInt();
@@ -202,7 +200,7 @@ public class DexData {
          * Read the proto ID items.
          */
         for (int i = 0; i < count; i++) {
-            listBlockInfo.add(new BlockInfo(getCurPos(), 12, "protoId"));
+            listBlockInfo.add(new BlockInfo(getCurPos(), 12, "proto_id_item"));
 
             mProtoIds[i] = new ProtoIdItem();
             mProtoIds[i].shortyIdx = readInt();
@@ -212,6 +210,8 @@ public class DexData {
             //System.out.println(i + ": " + mProtoIds[i].shortyIdx +
             //    " " + mStrings[mProtoIds[i].shortyIdx]);
         }
+
+        Collection<Integer> paramsOffSets = new HashSet<Integer>();
 
         /*
          * Go back through and read the type lists.
@@ -225,6 +225,8 @@ public class DexData {
                 protoId.types = new int[0];
                 continue;
             } else {
+                paramsOffSets.add(offset);
+
                 seek(offset);
                 int size = readInt();       // #of entries in list
                 protoId.types = new int[size];
@@ -233,13 +235,23 @@ public class DexData {
                     protoId.types[j] = readShort() & 0xffff;
                 }
             }
+        }
+
+        //loop through by space layout to avoid repeating
+        List<Integer> paramsOffList = new ArrayList<Integer>(paramsOffSets);
+        for(int off: paramsOffList) {
+            seek(off);
+            int size = readInt();       // #of entries in list
+            for (int j = 0; j < size; j++) {
+                readShort();
+            }
 
             //need to consider alignment, alignment: 4 bytes
             long remain = getCurPos() & 0x03;
             if (remain != 0) {
                 remain = 4 - remain;
             }
-            listBlockInfo.add(new BlockInfo(offset, getCurPos() - offset + remain, "type_list"));
+            listBlockInfo.add(new BlockInfo(off, getCurPos() - off + remain, "type_list"));
         }
     }
 
@@ -254,7 +266,7 @@ public class DexData {
         //System.out.println("reading " + count + " fieldIds");
         seek(mHeaderItem.fieldIdsOff);
         for (int i = 0; i < count; i++) {
-            listBlockInfo.add(new BlockInfo(getCurPos(), 2 + 2 + 4, "field_ids"));
+            listBlockInfo.add(new BlockInfo(getCurPos(), 2 + 2 + 4, "field_id_item"));
 
             mFieldIds[i] = new FieldIdItem();
             mFieldIds[i].classIdx = readShort() & 0xffff;
@@ -276,7 +288,7 @@ public class DexData {
         //System.out.println("reading " + count + " methodIds");
         seek(mHeaderItem.methodIdsOff);
         for (int i = 0; i < count; i++) {
-            listBlockInfo.add(new BlockInfo(getCurPos(), 2 + 2 + 4, "method_ids"));
+            listBlockInfo.add(new BlockInfo(getCurPos(), 2 + 2 + 4, "method_id_item"));
 
             mMethodIds[i] = new MethodIdItem();
             mMethodIds[i].classIdx = readShort() & 0xffff;
@@ -298,7 +310,7 @@ public class DexData {
         //System.out.println("reading " + count + " classDefs");
         seek(mHeaderItem.classDefsOff);
         for (int i = 0; i < count; i++) {
-            listBlockInfo.add(new BlockInfo(getCurPos(), 4 * 8, "class_def" ));
+            listBlockInfo.add(new BlockInfo(getCurPos(), 4 * 8, "class_def_item" ));
 
             mClassDefs[i] = new ClassDefItem();
             mClassDefs[i].classIdx = readInt();
@@ -593,7 +605,7 @@ public class DexData {
 
         long size = getCurPos() - start;
         listBlockInfo.add(new BlockInfo(start, size, "string"));
-        System.out.format("%08x %08x    %s\n", start, getCurPos(), new String(inBuf, 0, idx, "UTF-8"));
+
         return new String(inBuf, 0, idx, "UTF-8");
     }
 
@@ -684,7 +696,7 @@ public class DexData {
         public int classIdx;            // index into type_ids
     }
 
-    static class BlockInfo implements Comparable<BlockInfo> {
+    static class BlockInfo {
         public long start;
         public long size;
         public String name;
@@ -714,22 +726,6 @@ public class DexData {
             return (start == ((BlockInfo) obj).start
                     && size == ((BlockInfo) obj).size
                     && name.equals(((BlockInfo) obj).name));
-        }
-
-        @Override
-        public int compareTo(BlockInfo o) {
-            //compare priority
-            long cmp = start - o.start;
-            if ( cmp != 0) {
-                return (int)cmp;
-            }
-
-            cmp = start + size - (o.start + o.size);
-            if (cmp != 0) {
-                return (int)cmp;
-            }
-
-            return  name.compareTo(o.name);
         }
     }
 }
