@@ -21,6 +21,7 @@ import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 
 /**
  * Data extracted from a DEX file.
@@ -244,6 +245,7 @@ public class DexData {
     }
 
     /**
+     *
      * Loads the field ID list.
      */
     void loadFieldIds() throws IOException {
@@ -692,6 +694,21 @@ public class DexData {
             this.start = start;
             this.size = size;
             this.name = name;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(start, size, name);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) return true;
+            if (!(obj instanceof BlockInfo)) return false;
+
+            return (start == ((BlockInfo) obj).start
+                    && size == ((BlockInfo) obj).size
+                    && Objects.equals(name, ((BlockInfo) obj).name));
         }
     }
 }

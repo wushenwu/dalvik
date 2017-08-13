@@ -17,8 +17,8 @@
 package com.android.dexdeps;
 
 import java.io.PrintStream;
+import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Generate fancy output.
@@ -106,7 +106,7 @@ public class Output {
     }
 
     static void printSpaceLayOut(DexData dexData) {
-        List<DexData.BlockInfo> blockInfoList = dexData.getListBlockInfo();
+        Collection<DexData.BlockInfo> blockInfoList = dexData.getListBlockInfo();
 
         long prev_end = -1;
         String prev_name = "";
